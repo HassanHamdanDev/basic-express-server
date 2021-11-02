@@ -8,13 +8,15 @@ const PORT = process.env.PORT || 3090;
 const notFoundHandler = require('./error-handlers/404');
 const errorHandler = require('./error-handlers/500');
 const logger = require('./middleware/logger');
+const queryValidator = require('./middleware/validator');
 
 server.get('/Home', (req, res) => {
     res.status(200).send('All Good !!');
 });
 
-server.get('/person', (req, res) => {
-    res.status(200).send('person');
+server.get('/person', queryValidator, (req, res) => {
+    let name = req.query.name;
+    res.status(200).json({ name: `${name}` });
 });
 
 server.get('/error', (req, res, next) => {
