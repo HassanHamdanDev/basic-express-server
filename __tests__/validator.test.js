@@ -6,8 +6,13 @@ const mockRequest = supertest(server);
 
 describe('Web server', () => {
 
-    test('Should responed 404', async () => {
-        const response = await mockRequest.get('/foo');
-        expect(response.status).toBe(404);
+    test('Checking th name qurey', async () => {
+        const response = await mockRequest.get('/person?name=hassan');
+        expect(response.status).toBe(200);
+    });
+
+    test('no name', async () => {
+        const response = await mockRequest.get('/person?name=');
+        expect(response.status).toBe(500);
     });
 });
